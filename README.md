@@ -10,24 +10,14 @@ The custom Jenkins image includes the following modifications:
 
 ## Usage
 
-### Building Locally
-
-To build this image locally, run:
-
-```bash
-docker build -t my-jenkins-dind .
-```
-
-### Running Locally
-
-To run this image locally with access to your host's Docker daemon:
+To run this image, run:
 
 ```bash
 docker run --name jenkins-dind --rm -d \
   --privileged \
   -p 8080:8080 -p 50000:50000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  my-jenkins-dind
+  pcamelo/jenkins-dind:lts
 ```
 
 ## CI/CD Pipeline

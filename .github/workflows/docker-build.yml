@@ -1,21 +1,32 @@
-name: Build and Push Jenkins DinD Image
+name: Build and Push Image
 
 on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   schedule:
     - cron: "0 0 * * *"
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         TAG:
           - lts
           - latest
+
     steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       # Set up Docker Buildx
       - name: Set up Docker Buildx
@@ -34,6 +45,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jenkins-dind:${{ matrix.TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ matrix.TAG }}
           build-args: |
             TAG=${{ matrix.TAG }}

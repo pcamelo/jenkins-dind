@@ -17,6 +17,7 @@ RUN apt-get update -qq && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
     apt-get update -qq && \
     apt-get -y install docker-ce-cli && \
+    groupadd docker && \
     usermod -aG docker ${user}
 
 # Switch back to the Jenkins user

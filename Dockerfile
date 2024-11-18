@@ -1,5 +1,6 @@
 # Extend from the official Jenkins LTS image
 ARG TAG=lts
+ARG user=jenkins
 FROM jenkins/jenkins:${TAG}
 
 # Switch to root user to install dependencies
